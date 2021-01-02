@@ -1,14 +1,10 @@
 import { resolve } from 'path';
 import { merge } from 'webpack-merge';
-import { HotModuleReplacementPlugin } from 'webpack';
 
 import commonConfig from "./webpack.common";
 
 const devConfig = merge(commonConfig, {
     mode: "development",
-    plugins: [
-        new HotModuleReplacementPlugin(),
-    ],
     devtool: 'eval-source-map',
     devServer: {
         contentBase: resolve(__dirname, "./dist"),

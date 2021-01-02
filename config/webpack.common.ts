@@ -7,6 +7,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { Options as HtmlMinifierOptions } from 'html-minifier';
 import CopyPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import { loader as MiniCssExtractLoader } from 'mini-css-extract-plugin';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -27,7 +28,10 @@ const htmlMinifyOptions: HtmlMinifierOptions = {
 const commonConfig: Configuration = {
     cache: true,
     context: resolve(__dirname, '../'),
-    entry: resolve(__dirname, '../src/index.tsx'),
+    entry: {
+        app: resolve(__dirname, '../src/index.tsx'),
+        react: ["react", "react-dom", "react-router-dom"]
+    },
     output: {
         publicPath: '/',
         path: resolve(__dirname, '../dist'),
@@ -51,7 +55,7 @@ const commonConfig: Configuration = {
             {
                 test: /\.css$/,
                 use: [
-                    'style-loader',
+                    isDev ? 'style-loader' : MiniCssExtractLoader,
                     {
                         loader: 'css-loader',
                         options: {
@@ -69,7 +73,7 @@ const commonConfig: Configuration = {
             {
                 test: /\.scss$/,
                 use: [
-                    'style-loader',
+                    isDev ? 'style-loader' : MiniCssExtractLoader,
                     {
                         loader: 'css-loader',
                         options: {
@@ -86,6 +90,31 @@ const commonConfig: Configuration = {
                         loader: 'sass-loader',
                         options: {
                             sourceMap: true,
+                        },
+                    },
+                ],
+            },
+            {
+                test: [/\.gif$/, /\.jpe?g$/, /\.png$/],
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10 * 1024,
+                            name: '[name].[contenthash].[ext]',
+                            outputPath: 'images',
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.(ttf|woff|woff2|eot|otf)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            name: '[name]-[contenthash].[ext]',
+                            outputPath: 'fonts',
                         },
                     },
                 ],
