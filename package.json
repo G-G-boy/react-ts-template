@@ -1,7 +1,10 @@
 {
   "name": "react-ts-template",
   "version": "1.0.0",
-  "main": "index.js",
-  "author": "Gavin.guo <Gavin.guo@dfox.cn>",
-  "license": "MIT"
+  "private": true,
+  "author": "ggboy",
+  "license": "MIT",
+  "scripts": {
+    
+  }
 }
