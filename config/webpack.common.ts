@@ -29,8 +29,11 @@ const commonConfig: Configuration = {
     cache: true,
     context: resolve(__dirname, '../'),
     entry: {
-        app: resolve(__dirname, '../src/index.tsx'),
-        react: ["react", "react-dom", "react-router-dom"]
+        app: {
+            import: resolve(__dirname, '../src/index.tsx'),
+            dependOn: 'react-vendors'
+        },
+        'react-vendors': ["react", "react-dom", "react-router-dom"]
     },
     output: {
         publicPath: '/',
@@ -49,7 +52,6 @@ const commonConfig: Configuration = {
             {
                 test: /\.(tsx?|js)$/,
                 loader: 'babel-loader',
-                options: {cacheDirectory: true},
                 exclude: /node_modules/,
             },
             {
