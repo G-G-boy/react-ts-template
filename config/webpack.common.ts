@@ -155,9 +155,9 @@ const commonConfig: Configuration = {
                 from: '*',
                 to: resolve(__dirname, '../dist'),
                 toType: 'dir',
-                // filter: resourcePath => {
-                //     return !resourcePath.includes('index.html');
-                // }
+                filter: resourcePath => {
+                    return !resourcePath.includes('index.html');
+                }
             },]}),
         new ForkTsCheckerWebpackPlugin({
             typescript: {

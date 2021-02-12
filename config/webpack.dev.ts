@@ -18,6 +18,7 @@ const devConfig = merge(commonConfig, {
         host: '0.0.0.0',
         compress: true,
         hot: true,
+        hotOnly: true,
         port: 5000,
         open: true,
         inline: true,
