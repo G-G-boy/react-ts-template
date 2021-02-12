@@ -8,6 +8,7 @@ import {Options as HtmlMinifierOptions} from 'html-minifier';
 import CopyPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import {loader as MiniCssExtractLoader} from 'mini-css-extract-plugin';
+import {HMR_PATH} from '../scripts/middlewares/webpack-middleware';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -28,13 +29,7 @@ const htmlMinifyOptions: HtmlMinifierOptions = {
 const commonConfig: Webpack.Configuration = {
     cache: true,
     context: resolve(__dirname, '../'),
-    entry: {
-        app: {
-            import: resolve(__dirname, '../src/index.tsx'),
-            dependOn: 'react-vendors',
-        },
-        'react-vendors': ['react', 'react-dom', 'react-router-dom'],
-    },
+    entry: [resolve(__dirname, '../src/index.tsx')],
     output: {
         publicPath: '/',
         path: resolve(__dirname, '../dist'),
@@ -171,5 +166,11 @@ const commonConfig: Webpack.Configuration = {
         }),
     ],
 };
+
+if (isDev) {
+    (commonConfig.entry as string[]).unshift(
+        `webpack-hot-middleware/client?path=${HMR_PATH}&reload=true&overlay=true`,
+    );
+}
 
 export default commonConfig;

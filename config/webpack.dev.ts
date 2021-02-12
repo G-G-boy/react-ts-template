@@ -1,6 +1,6 @@
 import {resolve} from 'path';
 import {merge} from 'webpack-merge';
-import {HotModuleReplacementPlugin} from 'webpack';
+import {HotModuleReplacementPlugin, NoEmitOnErrorsPlugin} from 'webpack';
 import commonConfig from './webpack.common';
 import {Configuration} from './typings';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
@@ -8,7 +8,11 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 const devConfig = merge<Configuration>(commonConfig, {
     target: 'web',
     mode: 'development',
-    plugins: [new HotModuleReplacementPlugin(), new ReactRefreshWebpackPlugin()],
+    plugins: [
+        new HotModuleReplacementPlugin(),
+        new ReactRefreshWebpackPlugin(),
+        new NoEmitOnErrorsPlugin(),
+    ],
     devtool: 'eval-cheap-module-source-map',
     devServer: {
         contentBase: resolve(__dirname, './dist'),
