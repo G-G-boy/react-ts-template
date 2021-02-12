@@ -16,10 +16,10 @@ module.exports = function (api) {
         plugins,
         env: {
             development: {
-                presets: [['@babel/preset-react', { development: true }]],
+                presets: [['@babel/preset-react', { development: true, runtime: "automatic" }]],
             },
             production: {
-                presets: ['@babel/preset-react'],
+                presets: ['@babel/preset-react', {runtime: "automatic"}],
                 plugins: ['@babel/plugin-transform-react-constant-elements', '@babel/plugin-transform-react-inline-elements'],
             },
         },
