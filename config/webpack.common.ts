@@ -1,4 +1,4 @@
-import Webpack from 'webpack/types';
+import {Configuration} from 'webpack';
 import {resolve} from 'path';
 import WebpackBarPlugin from 'webpackbar';
 import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin';
@@ -26,7 +26,7 @@ const htmlMinifyOptions: HtmlMinifierOptions = {
     useShortDoctype: true,
 };
 
-const commonConfig: Webpack.Configuration = {
+const commonConfig: Configuration = {
     cache: true,
     context: resolve(__dirname, '../'),
     entry: [resolve(__dirname, '../src/index.tsx')],

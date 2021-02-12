@@ -14,7 +14,6 @@ export default function webpackMiddleware(compiler: Compiler) {
     };
 
     const hotMiddlewareOptions: webpackHotMiddleware.MiddlewareOptions = {
-        // sse 路由
         path: HMR_PATH,
     };
 
