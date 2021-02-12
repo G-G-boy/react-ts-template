@@ -1,13 +1,13 @@
-import { Configuration } from 'webpack';
-import {resolve} from "path";
-import WebpackBarPlugin from "webpackbar";
+import Webpack from 'webpack/types';
+import {resolve} from 'path';
+import WebpackBarPlugin from 'webpackbar';
 import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import {CleanWebpackPlugin} from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { Options as HtmlMinifierOptions } from 'html-minifier';
+import {Options as HtmlMinifierOptions} from 'html-minifier';
 import CopyPlugin from 'copy-webpack-plugin';
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import { loader as MiniCssExtractLoader } from 'mini-css-extract-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import {loader as MiniCssExtractLoader} from 'mini-css-extract-plugin';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -25,15 +25,15 @@ const htmlMinifyOptions: HtmlMinifierOptions = {
     useShortDoctype: true,
 };
 
-const commonConfig: Configuration = {
+const commonConfig: Webpack.Configuration = {
     cache: true,
     context: resolve(__dirname, '../'),
     entry: {
         app: {
             import: resolve(__dirname, '../src/index.tsx'),
-            dependOn: 'react-vendors'
+            dependOn: 'react-vendors',
         },
-        'react-vendors': ["react", "react-dom", "react-router-dom"]
+        'react-vendors': ['react', 'react-dom', 'react-router-dom'],
     },
     output: {
         publicPath: '/',
@@ -68,7 +68,7 @@ const commonConfig: Configuration = {
                     },
                     {
                         loader: 'postcss-loader',
-                        options: { sourceMap: true },
+                        options: {sourceMap: true},
                     },
                 ],
             },
@@ -86,7 +86,7 @@ const commonConfig: Configuration = {
                     },
                     {
                         loader: 'postcss-loader',
-                        options: { sourceMap: true },
+                        options: {sourceMap: true},
                     },
                     {
                         loader: 'sass-loader',
@@ -121,12 +121,12 @@ const commonConfig: Configuration = {
                     },
                 ],
             },
-        ]
+        ],
     },
     plugins: [
         new WebpackBarPlugin({
             name: 'react-ts-template',
-            color: "#61dafb", //react color
+            color: '#61dafb', //react color
         }),
         new FriendlyErrorsPlugin(),
         new CleanWebpackPlugin(),
@@ -150,22 +150,26 @@ const commonConfig: Configuration = {
                 };
             },
         }),
-        new CopyPlugin({patterns: [{
-                context: resolve(__dirname, '../public'),
-                from: '*',
-                to: resolve(__dirname, '../dist'),
-                toType: 'dir',
-                filter: resourcePath => {
-                    return !resourcePath.includes('index.html');
-                }
-            },]}),
+        new CopyPlugin({
+            patterns: [
+                {
+                    context: resolve(__dirname, '../public'),
+                    from: '*',
+                    to: resolve(__dirname, '../dist'),
+                    toType: 'dir',
+                    filter: (resourcePath) => {
+                        return !resourcePath.includes('index.html');
+                    },
+                },
+            ],
+        }),
         new ForkTsCheckerWebpackPlugin({
             typescript: {
                 memoryLimit: isDev ? 1024 : 2048,
-                configFile: resolve(__dirname, '../tsconfig.json')
-            }
+                configFile: resolve(__dirname, '../tsconfig.json'),
+            },
         }),
-    ]
-}
+    ],
+};
 
 export default commonConfig;
