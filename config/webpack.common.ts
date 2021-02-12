@@ -35,6 +35,7 @@ const commonConfig: Configuration = {
         path: resolve(__dirname, '../dist'),
         filename: 'js/[name]-[hash].bundle.js',
         hashSalt: 'react-ts-template',
+        assetModuleFilename: 'assets/[hash][ext][query]',
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json', '.scss'],
@@ -93,28 +94,26 @@ const commonConfig: Configuration = {
             },
             {
                 test: [/\.gif$/, /\.jpe?g$/, /\.png$/],
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10 * 1024,
-                            name: '[name].[contenthash].[ext]',
-                            outputPath: 'images',
-                        },
-                    },
-                ],
+                type: 'asset/resource',
+                generator: {
+                    filename: 'images/[hash][ext][query]',
+                },
             },
             {
                 test: /\.(ttf|woff|woff2|eot|otf)$/,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            name: '[name]-[contenthash].[ext]',
-                            outputPath: 'fonts',
-                        },
+                type: 'asset/resource',
+                generator: {
+                    filename: 'fonts/[hash][ext][query]',
+                },
+            },
+            {
+                test: /\.svg/,
+                type: 'asset',
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 4 * 1024,
                     },
-                ],
+                },
             },
         ],
     },
