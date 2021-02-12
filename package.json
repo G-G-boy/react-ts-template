@@ -5,6 +5,7 @@
   "author": "ggboy",
   "license": "MIT",
   "scripts": {
+    "app:build": "cross-env-shell NODE_ENV=production ts-node --files -P ./config/tsconfig.json scripts/build.ts",
     "start": "cross-env NODE_ENV=development TS_NODE_PROJECT='./config/tsconfig.json' webpack serve --config ./config/webpack.dev.ts",
     "dev": "cross-env NODE_ENV=development TS_NODE_PROJECT='./config/tsconfig.json' webpack --config ./config/webpack.dev.ts",
     "build": "cross-env NODE_ENV=production TS_NODE_PROJECT='./config/tsconfig.json' webpack --config ./config/webpack.prod.ts",

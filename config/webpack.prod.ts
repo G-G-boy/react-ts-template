@@ -4,7 +4,6 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import commonConfig from './webpack.common';
-const SizePlugin = require('size-plugin');
 
 const prodConfig = merge(commonConfig, {
     mode: 'production',
@@ -16,7 +15,6 @@ const prodConfig = merge(commonConfig, {
             ignoreOrder: false,
         }),
         new CompressionPlugin(),
-        new SizePlugin(),
     ],
     optimization: {
         runtimeChunk: 'single',
